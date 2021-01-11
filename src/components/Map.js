@@ -9,7 +9,10 @@ import './Map.css';
 import FetchData from './../FetchData';
 import moment from 'moment';
 import MultiselectCheckbox from './MultiselectCheckbox';
-import TimeChart from './TimeChart';
+import { Line, defaults } from 'react-chartjs-2';
+import FormatChartData from './formatChartData';
+
+defaults.global.maintainAspectRatio = false
 
 
 // Token From Mabox site. No Personal Token Embedded
@@ -43,10 +46,9 @@ const Map = () => {
 
   const [mapData, setData] = useState({data: {}})
 
-
   const [filterDays, setFilterDays] = useState(moment.weekdays());
 
-  const [chartDataValues,setChartData] = useState({data: {}});
+  const [filterData,setFilteredData] = useState({data: {}})
 
   /**   Function to Handle Update to Days  */
   const handleCheckboxListChange = filterData => {
@@ -64,7 +66,9 @@ const Map = () => {
       "features": filterFeatures
     }
     map.getSource('crash').setData(filteredDataSource);
-    setChartData(filteredDataSource)
+ 
+    const chartData = FormatChartData(filteredDataSource);
+    setFilteredData(chartData);
 
   }
 
@@ -75,7 +79,7 @@ const Map = () => {
       container: mapRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [-93.452062, 45.090494],
-      zoom: 12
+      zoom: 11
     });
 
     map.on("load", (...args) => {
@@ -84,20 +88,12 @@ const Map = () => {
 
     FetchData.fetchData().then((response) => {
 
-      setData(response.data); // Set Data Source Staate
-      //setChartData(response.data);
-
-      var freqMap = {};
-      response.data.features.forEach(function (item) {
-        const t = moment(item.properties.time, 'HHmm');
-        const key = moment(item.properties.time, 'HHmm').endOf('hour').format('h A');
-        if (freqMap.hasOwnProperty(key)) {
-          freqMap[key] = freqMap[key] + 1;
-        } else {
-          freqMap[key] = 1;
-        }
-      });
-
+      setData(response.data); // Set Data Source State
+      
+      // Initialze Chjar with Initial; Data
+      const chartData = FormatChartData(response.data);
+      setFilteredData(chartData);
+      
       map.addSource('crash', {
         type: 'geojson',
         data: response.data
@@ -140,27 +136,12 @@ const Map = () => {
           </div>
           
            <div className = 'map-container' ref = {mapRef} ></div>
+           <div className="footer">
+              <Line data={filterData} />
+           </div>
 
-
-          <div className="footer">
-              <TimeChart chartData = {chartDataValues}/>
-          </div>
     </div>
   );
 };
 
 export default Map;
-
-
-/*
-
-<div className='checkPanel' >
-        <MultiselectCheckbox options = {daysOfWeek} onChange = {handleCheckboxListChange} /> 
-      </div> 
-      <div className = 'map-container' ref = {mapRef} ></div>
-      <div class = 'chartDiv' > 
-        
-      </div>
-
-
-*/
