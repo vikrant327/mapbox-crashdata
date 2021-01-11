@@ -8,6 +8,7 @@ A sample app using Mapbox and React to Show Crash density by day
 git clone https://github.com/vikrant327/mapbox-crashdata 
 
 cd mapbox-crashdata
+
 npm i
 
 # Add access token
