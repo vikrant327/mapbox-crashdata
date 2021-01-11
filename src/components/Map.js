@@ -79,7 +79,7 @@ const Map = () => {
       container: mapRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [-93.452062, 45.090494],
-      zoom: 11
+      zoom: 12
     });
 
     map.on("load", (...args) => {
