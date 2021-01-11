@@ -1,18 +1,41 @@
 .main {
     display:flex;
     flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    position:absolute;
 }
+
+.header {
+  height:75px;
+  font-size:16px;
+}
+
+.map-container {
+  flex-grow:3;
+  height:100%;
+  width: 100%;
+  top:0px;
+  bottom:0px;
+}
+
+.footer {
+  height: 300px;
+  flex-grow:1;
+}
+
+/*
 .map-container {
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
-  
 }
 
-.leftPanel {
-  display: inline-block;
+.checkPanel {
+   display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
@@ -26,5 +49,7 @@
 }
 
 .chartDiv {
-  flex-grow:3;
+   height:100px;
+   display:none;
 }
+*/

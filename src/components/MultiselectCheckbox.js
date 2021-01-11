@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 const MultiselectCheckbox = ({ options, onChange }) => {
     const [data, setData] = React.useState(options);
@@ -19,6 +19,7 @@ const MultiselectCheckbox = ({ options, onChange }) => {
         {data.map((item, index) => (
           <label key={item.label}>
             <input
+            readOnly
               type="checkbox"
               checked={item.checked || false}
               onClick={() => toggle(index)}
