@@ -20,6 +20,7 @@ const formatChartData = (chartData) => {
             freqMap[key] =  1;
             }
         });
+        delete freqMap["Invalid date"];
 
          const mapArray = Object.keys(freqMap).map(function (key) { 
            return [key, freqMap[key]]; 
