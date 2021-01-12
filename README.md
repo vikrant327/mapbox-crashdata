@@ -1,7 +1,7 @@
 # mapbox-crashdata
 A sample app using Mapbox and React to Show Crash density by day of the week.
 
-![Demo](https://user-images.githubusercontent.com/6988224/104332721-194a1a80-54b6-11eb-93a1-4cf5c6b5aa88.gif)
+![Demo](https://user-images.githubusercontent.com/6988224/104333589-0be16000-54b7-11eb-8b7f-3056a6b1f545.gif)
 
 
 # Install
