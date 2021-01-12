@@ -134,7 +134,7 @@ const Map = () => {
   return ( 
     <div className='main' >
           <div className="header">
-            <h1>Crash Hotspots in City of Maple Grove, MN (2010-2017)</h1> 
+            <h1>Vehicle Crash Hotspots in City of Maple Grove, MN (2010-2017)</h1> 
             
           </div>
           
