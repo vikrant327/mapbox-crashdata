@@ -134,12 +134,13 @@ const Map = () => {
   return ( 
     <div className='main' >
           <div className="header">
-            <h1>Select Days of Week to filter Accidents</h1> 
-            <MultiselectCheckbox options={daysOfWeek} onChange={handleCheckboxListChange} /> 
+            <h1>Crash Hotspots in City of Maple Grove, MN (2010-2017)</h1> 
+            
           </div>
           
            <div className = 'map-container' ref = {mapRef} ></div>
            <div className="footer">
+              <MultiselectCheckbox options={daysOfWeek} onChange={handleCheckboxListChange} /> 
               <Line data={filterData} />
            </div>
 
