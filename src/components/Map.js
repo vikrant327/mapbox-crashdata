@@ -1,8 +1,7 @@
 import React, {
   useRef,
   useEffect,
-  useState,
-  useContext
+  useState
 } from 'react';
 import mapboxgl from 'mapbox-gl';
 import './Map.css';
@@ -15,7 +14,9 @@ import FormatChartData from './formatChartData';
 defaults.global.maintainAspectRatio = false
 
 
-// Token From Mabox site. No Personal Token Embedded
+/**
+ * Token From Mabox site. No Personal Token Embedded
+*/
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlrcmFudDMyNyIsImEiOiJjanIwcjFlMTAwczhqNDNxcXByc3VmajhzIn0.b3Fq-fSNOmwdWXr1E5lv4g'; //
 
 // Days abbrevation map to match data day key values
@@ -29,6 +30,7 @@ const dayAbbr = {
   "Saturday": "SAT"
 }
 
+// Initializa days of week from moment
 const daysOfWeek = moment.weekdays().map((e, i) => {
   return {
     value: e,
@@ -37,16 +39,15 @@ const daysOfWeek = moment.weekdays().map((e, i) => {
   }
 });
 
-const Map = () => {
 
+
+const Map = () => {
 
   const mapRef = useRef(null);
 
   const [map, setMap] = useState(null);
 
   const [mapData, setData] = useState({data: {}})
-
-  const [filterDays, setFilterDays] = useState(moment.weekdays());
 
   const [filterData,setFilteredData] = useState({data: {}})
 
@@ -73,8 +74,9 @@ const Map = () => {
   }
 
 
-  // Initialize map when component mounts
+  /** Initialize map when component mounts */
   useEffect(() => {
+    
     const map = new mapboxgl.Map({
       container: mapRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -83,14 +85,14 @@ const Map = () => {
     });
 
     map.on("load", (...args) => {
-      setMap(map)
+       setMap(map)
     })
 
     FetchData.fetchData().then((response) => {
 
-      setData(response.data); // Set Data Source State
+       
+      setData(response.data); 
       
-      // Initialze Chjar with Initial; Data
       const chartData = FormatChartData(response.data);
       setFilteredData(chartData);
       
@@ -119,9 +121,9 @@ const Map = () => {
             [1.0, "red"]
           ]
         }
-      });
+      })
 
-    });
+    }).catch(err => console.log(err));
 
     // Add navigation control 
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -132,7 +134,8 @@ const Map = () => {
   return ( 
     <div className='main' >
           <div className="header">
-          <MultiselectCheckbox options={daysOfWeek} onChange={handleCheckboxListChange} /> 
+            <h1>Select Days of Week to filter Accidents</h1> 
+            <MultiselectCheckbox options={daysOfWeek} onChange={handleCheckboxListChange} /> 
           </div>
           
            <div className = 'map-container' ref = {mapRef} ></div>
